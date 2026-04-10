@@ -2,6 +2,12 @@
 
 name=$(basename "$PWD")
 
+
+if tmux has-session -t $name 2>/dev/null; then
+  tmux attach -t $name
+  exit
+fi
+
 tmux new -s $name -d
 tmux send-keys -t $name 'nvim .' C-m
 tmux rename-window -t $name nvim
