@@ -6,12 +6,15 @@ if [ $# -eq 0 ]; then
     selected=$(find /home/shivanshu/Projects -type d -not -path '*/.*' -not -path '*/node_modules/*' -not -path '*/__pycache__/*' -not -path '*/target/*' | fzf)
     [ -z "$selected" ] && exit 1
     name=$(basename "$selected")
+    cd "$selected"
 fi
 
 if tmux has-session -t $name 2>/dev/null; then
     tmux attach -t $name
     exit
 fi
+
+
 
 tmux new -s $name -d
 tmux send-keys -t $name 'nvim .' C-m
