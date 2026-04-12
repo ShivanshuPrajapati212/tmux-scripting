@@ -2,10 +2,15 @@
 
 name=$(basename "$PWD")
 
+if [ $# -eq 0 ]; then
+    selected=$(find /home/shivanshu/Projects -type d -not -path '*/.*' -not -path '*/node_modules/*' -not -path '*/__pycache__/*' -not -path '*/target/*' | fzf)
+    [ -z "$selected" ] && exit 1
+    name=$(basename "$selected")
+fi
 
 if tmux has-session -t $name 2>/dev/null; then
-  tmux attach -t $name
-  exit
+    tmux attach -t $name
+    exit
 fi
 
 tmux new -s $name -d
@@ -24,5 +29,5 @@ tmux new-window -t $name
 tmux rename-window -t $name other 
 
 tmux select-window -t $name:1
- 
+
 tmux attach -t $name 
