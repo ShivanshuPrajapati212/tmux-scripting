@@ -1,10 +1,12 @@
 #!/bin/bash
 
+
+source ~/.zshrc
+
 name=$(basename "$PWD")
-path=/home/shivanshu/Projects
 
 if [ $# -eq 0 ]; then
-    selected=$(find $path -type d -not -path '*/.*' -not -path '*/node_modules/*' -not -path '*/__pycache__/*' -not -path '*/target/*' | fzf)
+    selected=$(find $codingDirPath -type d -not -path '*/.*' -not -path '*/node_modules/*' -not -path '*/__pycache__/*' -not -path '*/target/*' | fzf)
     [ -z "$selected" ] && exit 1
     name=$(basename "$selected")
     cd "$selected"
