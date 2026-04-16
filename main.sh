@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 
 source ~/.zshrc
@@ -10,6 +10,16 @@ if [ $# -eq 0 ]; then
     [ -z "$selected" ] && exit 1
     name=$(basename "$selected")
     cd "$selected"
+fi
+
+if [ "$1" = "new" ]; then
+    if [ -z "$2" ]; then
+        echo "name required"
+        exit 1
+    fi
+    mkdir "$codingDirPath/$2"
+    cd "$codingDirPath/$2"
+    name="$2"
 fi
 
 if tmux has-session -t $name 2>/dev/null; then
